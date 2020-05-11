@@ -108,7 +108,7 @@ read_func <- function () {
 ```
 
 ### the function for normalization
-In this trial, I did normalization below because the dataset is uniform distribution.  
+In this trial, I normalize with below equation because the dataset is **uniform distribution**.  
 ```
 norm <- function(x){
   return((x-min(x)) / (max(x)-min(x)))
@@ -124,7 +124,7 @@ In conclusion, I could construct NN model. In the future, I try to intoduce more
 Especially, I want to more study about caret package because I feel it is very convinient.  
 
 
-# Problems
+# My Problems
 I show my problems below.   
     - Is it possible to use the values that are over the range of training dataset as parameters for prediction?  
     - How to normalize unknown dataset?  
