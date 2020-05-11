@@ -7,14 +7,14 @@ I try to use below packages and to introduce ML to my reserach that is by Molecu
 後述のRのpackageを用いて自身のMDシミュレーションを用いた研究に機械学習を導入することを目指します.
 
 # Packages
-*packages about NN
-    nnet packeage
-    neuralnet package
+packages about NN
+    `nnet packeage
+    neuralnet package`
     
-*packages about optimaizer of multiple regression
+packages about optimaizer of multiple regression
     caret package
     
-*packages about MPI
+packages about MPI
     doParallel package
 
 
