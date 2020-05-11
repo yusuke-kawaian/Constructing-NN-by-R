@@ -109,12 +109,23 @@ Pythonでの`input('>>>	')`関数にあたるもの. Rでは意外と無かっ�
 ```
 Pythonでの`+`, Fortran90での`//`にあたるもの. 文字列を結合する関数. これもRには無かったので以下略.
 
+### the function for normalization
+```
+norm <- function(x){
+  return((x-min(x)) / (max(x)-min(x)))
+}
+```
+今回のdatasetは一様分布であるため, 上記の一般化を行った. 
 
-
-#Conclusion  
+# Conclusion  
 In conclusion, I could construct NN model. In the future, I try to intoduce more packages because my study give only little datasets. The package of R has many good points and bad points. So, I want to introdce too tensorflow of python that is genelic.   
 色々調べながら取り組んだ結果, 一応モデルとしては完成した. そもそもdatasetがあまり多くないという問題を抱えているためこれからも様々なpackageを利用してみたい. Rはpackageごとの長所短所の差が激しいため, 汎用性の高いPythonのtensorflowでも似たようなモデルを構築したい.  
 
 この個人的なまとめを書いていて思ったが, caret packageがすごく使いやすそうなので今後勉強していきたい.
+
+# problems
+現状自分が抱える問題点を以下に記す.  
+    - datasetでカバーされていない範囲の数値をパラメータとして予測に用いていいのか. (pore_d = 11までしかdatasetはカバーされていないが, pore_d = 15の時の数値を予測することが可能か.)
+    - 未知
 
 
