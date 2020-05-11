@@ -1,5 +1,5 @@
 # Constructing-NN-by-R
-Practice to construct model of Mechanical Learning (ML) by R and the memo. I try to use below packages and to introduce ML to my reserach that is by Molecular Dynamics (MD) simulation. To keep accuracy of this README, I write on Japanese, README (Japanese).md, too just in case.   
+Practice to construct model of Mechanical Learning (ML) by R and the memo. I try to use below packages and to introduce ML to my reserach that is by Molecular Dynamics (MD) simulation. To keep accuracy of this README, I write on Japanese, **README (Japanese).md**, too just in case.   
 
 # Overview
 My study investigates the characteristics that metal cations selectivity adsorb to micro porous carbon with applied voltage by MD simulation. In this trial, I construct the ML model that predicts the probability `pred_P` that metal cations adsorb to a pore with 7 parameters, `mass`, `valent`, the first/second hydration radius `r1/ r2`, the maximum value of RDF `gr_max`, voltage `vol` and pore diameter `pore_d`, by R.       
@@ -39,15 +39,15 @@ About this detail, please shows [here](https://www.rdocumentation.org/packages/n
 
 memo  
 good points  
-    - easy.
-    - output leraning process on console.
-    - speedy than the neuralnet package. 
+    - easy.  
+    - output leraning process on console.  
+    - speedy than the neuralnet package.  
 
 bad points  
-    - restrictive. it make less than 3 layers NN. 
-    - it can't plot.
+    - restrictive. it make less than 3 layers NN.  
+    - it can't plot.  
     - The convergence by this optimizer is not global minimum.  
-    - I've not understood how to use activated function yet.　　 
+    - I've not understood how to use activated function yet.   
     
 ### neuralnet package  
 This package can construct large scare NN model.  
@@ -75,12 +75,12 @@ memo
 good points  
     - it can build DL model.    
     - it can choose some act. func. and optimizer.    
-    - it can plot NN model.
+    - it can plot NN model.  
 
 bad points  
-    - **neuralnet function can't deal with unknown dataset because this function specifies both parameters and labels. So, I don't find how to introduce unknown dataset to themodel.**  
-    - it can't use ReLU function that is high performance act. function. 
-    - it can't process complex DL model with personal PC although it can construct DL model.
+    - **neuralnet function can't deal with unknown dataset because this function specifies both parameters and labels. So, I don't find how to introduce unknown dataset to themodel.**    
+    - it can't use ReLU function that is high performance act. function.   
+    - it can't process complex DL model with personal PC although it can construct DL model.  
 
 ### caret package  
 This package can deal with many ML. In this trial, I use it for data processing mainly.  
