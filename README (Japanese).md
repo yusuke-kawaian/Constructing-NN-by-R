@@ -1,9 +1,7 @@
 # Constructing-NN-by-R
-Practice to construct model of Mechanical Learning (ML) by R and the memo. I try to use below packages and to introduce ML to my reserach that is by Molecular Dynamics (MD) simulation. To keep accuracy of this README, I write on Japanese too just in case.  
 Rを用いた機械学習モデルの構築の練習とそのメモである. 後述のRのpackageを用いて自身のMDシミュレーションを用いた研究に機械学習を導入することを目指す. 正確性を担保するため一応日本語でも記す.  
 
-# Overview
-My study investigates the characteristics that metal cations selectivity adsorb to micro porous carbon with applied voltage by MD simulation. In this trial, I construct the ML model that predicts the probability `pred_P` that metal cations adsorb to a pore with 7 parameters, `mass`, `valent`, the first/second hydration radius `r1/ r2`, the maximum value of RDF `gr_max`, voltage `vol` and pore diameter `pore_d`, by R.       
+# Overview    
 私の研究は, MD計算を用いて系に電圧を印加した際のカチオンの多孔質カーボンへの選択的吸着の特性を調査するものである. 本試行はRを用いてカチオンの質量 `mass`, 価数 `valent`, 第一/第二水和半径 `r1/r2`, RDFの最大値 `gr_max` 並びに系に印加した電圧 `vol`, 系の細孔径 `pore_d` の7つの特徴量から細孔内へカチオンが吸着される確率 pred_P を予測するモデルを作成する.  
 
 # Description  
@@ -41,15 +39,15 @@ About this detail, please shows [here](https://www.rdocumentation.org/packages/n
 
 memo  
 good points  
-    - easy. 簡単.  
-    - output leraning process on console. コンソールに tensorflow みたく学習過程が表示されるので見やすい.  
-    - speedy. neuralnet packageに比べて学習が早く感じた.  
+    - 簡単.  
+    - コンソールに tensorflow みたく学習過程が表示されるので見やすい.  
+    - neuralnet packageに比べて学習が早く感じた.  
 
 bad points  
-    - restrictive. 最大3層NNまでしか組めない.  
-    - it can't plot. NNモデルのplot機能が無い.  
+    - 最大3層NNまでしか組めない.  
+    - NNモデルのplot機能が無い.  
     - 学習の収束地点はglobal minimumではない. (学習毎に結果が異なる.)  
-    - I've not understood how to use activated function yet. 活性化関数の指定法がちゃんと理解できていない. (多分恒等関数とsoftmaxが使える)　　 
+    - 活性化関数の指定法がちゃんと理解できていない. (多分恒等関数とsoftmaxが使える)　　 
     
 ### neuralnet package  
 This package can construct large scare NN model.  
@@ -75,9 +73,9 @@ About this detail, please shows [here](https://www.rdocumentation.org/packages/n
 
 memo  
 good points  
-    - it can build DL model. 3層以上の複雑なNNを構築できる.    
-    - it can choose some act. func. and optimizer. act. func.やoptimizerなど様々な種類を指定できる.    
-    - it can plot NN model. NNのplotをすることができる.  
+    - 3層以上の複雑なNNを構築できる.    
+    - act. func.やoptimizerなど様々な種類を指定できる.    
+    - NNのplotをすることができる.  
 
 bad points  
     - **neuralnet functionでは, 訓練データをdatasetとlabelに分けずに指定するので, label未知データを用いる場合どのように読み込めば良いか分からない.**  
@@ -119,8 +117,10 @@ norm <- function(x){
 ```
 今回のdatasetは一様分布であるため, 上記の正規化を行った. 
 
-# Conclusion  
-In conclusion, I could construct NN model. In the future, I try to intoduce more packages because my study give only little datasets. The package of R has many good points and bad points. So, I want to introdce too tensorflow of python that is genelic.   
+# Results and Discussion
+そのうち追記する予定.
+
+# Conclusion     
 色々調べながら取り組んだ結果, 一応モデルとしては完成した. そもそもdatasetがあまり多くないという問題を抱えているためこれからも様々なpackageを利用してみたい. Rはpackageごとの長所短所の差が激しいため, 汎用性の高いPythonのtensorflowでも似たようなモデルを構築したい.  
 
 この個人的なまとめを書いていて思ったが, caret packageがすごく使いやすそうなので今後勉強していきたい.
