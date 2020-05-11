@@ -37,7 +37,7 @@ This package can construct 3 layers NN.
 **Optimizer: BFGS method  
 act. func.: softmax or linear conbination(?)  
 err. func.: MSE or closs enthoropy(?)**  
-About this deteal, please shows [here](https://www.rdocumentation.org/packages/nnet/versions/7.3-14/topics/nnet).  
+About this detail, please shows [here](https://www.rdocumentation.org/packages/nnet/versions/7.3-14/topics/nnet).  
 
 memo  
 good points  
@@ -71,7 +71,7 @@ This package can construct large scare NN model.
 **Optimizer: Back propagation, RPROP+ or RPROP-.  
 act. func.: logistic sigmoid, tanh or linear conbination    
 err. func.: MSE or closs enthoropy**    
-About this deteal, please shows [here](https://www.rdocumentation.org/packages/neuralnet/versions/1.44.2/topics/neuralnet).  
+About this detail, please shows [here](https://www.rdocumentation.org/packages/neuralnet/versions/1.44.2/topics/neuralnet).  
 
 memo  
 good points  
@@ -86,7 +86,7 @@ bad points
 
 ### caret package  
 This package can deal with many ML. In this trial, I use it for data processing mainly.  
-About this deteal, please shows [here](http://topepo.github.io/caret/index.html).
+About this detail, please shows [here](http://topepo.github.io/caret/index.html).
 
 ## Convinient Function
 I show some convinient function.  
@@ -125,7 +125,7 @@ In conclusion, I could construct NN model. In the future, I try to intoduce more
 
 この個人的なまとめを書いていて思ったが, caret packageがすごく使いやすそうなので今後勉強していきたい.
 
-# problems
+# Problems
 現状自分が抱える問題点, 疑問点を以下に記す.  
     - datasetでカバーされていない範囲の数値をパラメータとして予測に用いていいのか. (pore_d = 11までしかdatasetはカバーされていないが, pore_d = 15の時の数値を予測することが可能か.)  
     - 未知datasetの正規化はどの尺度で行えばいいのか.  
