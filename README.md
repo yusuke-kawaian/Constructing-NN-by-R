@@ -39,6 +39,7 @@ act. func.: softmax or linear conbination(?)
 err. func.: MSE or closs enthoropy(?)**  
 About this deteal, please shows [here](https://www.rdocumentation.org/packages/nnet/versions/7.3-14/topics/nnet).  
 
+memo  
 good points  
     - easy. 簡単.  
     - output leraning process on console. コンソールに tensorflow みたく学習過程が表示されるので見やすい.  
@@ -72,6 +73,7 @@ act. func.: logistic sigmoid, tanh or linear conbination
 err. func.: MSE or closs enthoropy**    
 About this deteal, please shows [here](https://www.rdocumentation.org/packages/neuralnet/versions/1.44.2/topics/neuralnet).  
 
+memo  
 good points  
     - it can build DL model. 3層以上の複雑なNNを構築できる.    
     - it can choose some act. func. and optimizer. act. func.やoptimizerなど様々な種類を指定できる.    
@@ -86,7 +88,7 @@ bad points
 This package can deal with many ML. In this trial, I use it for data processing mainly.  
 About this deteal, please shows [here](http://topepo.github.io/caret/index.html).
 
-## Function
+## Convinient Function
 I show some convinient function.  
 ### the function for input on console
 ```
@@ -115,7 +117,7 @@ norm <- function(x){
   return((x-min(x)) / (max(x)-min(x)))
 }
 ```
-今回のdatasetは一様分布であるため, 上記の一般化を行った. 
+今回のdatasetは一様分布であるため, 上記の正規化を行った. 
 
 # Conclusion  
 In conclusion, I could construct NN model. In the future, I try to intoduce more packages because my study give only little datasets. The package of R has many good points and bad points. So, I want to introdce too tensorflow of python that is genelic.   
@@ -124,8 +126,10 @@ In conclusion, I could construct NN model. In the future, I try to intoduce more
 この個人的なまとめを書いていて思ったが, caret packageがすごく使いやすそうなので今後勉強していきたい.
 
 # problems
-現状自分が抱える問題点を以下に記す.  
-    - datasetでカバーされていない範囲の数値をパラメータとして予測に用いていいのか. (pore_d = 11までしかdatasetはカバーされていないが, pore_d = 15の時の数値を予測することが可能か.)
-    - 未知
+現状自分が抱える問題点, 疑問点を以下に記す.  
+    - datasetでカバーされていない範囲の数値をパラメータとして予測に用いていいのか. (pore_d = 11までしかdatasetはカバーされていないが, pore_d = 15の時の数値を予測することが可能か.)  
+    - 未知datasetの正規化はどの尺度で行えばいいのか.  
+    - neuralnet packageに未知datasetを読み込ませて予測するにはどうすればいいのか.  
+    - RでReLU関数を用いるにはどのような関数を定義すればいいのか.
 
 
