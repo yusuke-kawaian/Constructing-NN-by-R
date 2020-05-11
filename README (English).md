@@ -115,6 +115,8 @@ norm <- function(x){
 }
 ```
  
+# Results and Discussion  
+write soon.  
 
 # Conclusion  
 In conclusion, I could construct NN model. In the future, I try to intoduce more packages because my study give only little datasets. The package of R has many good points and bad points. So, I want to introdce too tensorflow of python that is genelic.   
@@ -124,10 +126,10 @@ Especially, I want to more study about caret package because I feel it is very c
 
 # Problems
 I show my problems below.   
-    - Is it possible to use as parameterspredict values by datasetでカバーされていない範囲の数値をパラメータとして予測に用いていいのか. (pore_d = 11までしかdatasetはカバーされていないが, pore_d = 15の時の数値を予測することが可能か.)   
-    - How to normalize unknown dataset.  
-    - How to use neuralnet package for prediction with unknown dataset.    
-    - How to define reLU function on R.
+    - Is it possible to use the values that are over the range of training dataset as parameters for prediction?  
+    - How to normalize unknown dataset?  
+    - How to use neuralnet package for prediction with unknown dataset?    
+    - How to define reLU function on R?
 
 
 
