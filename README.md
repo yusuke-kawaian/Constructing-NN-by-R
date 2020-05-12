@@ -1,4 +1,4 @@
-# Constructing-NN-by-R
+# Constructing_ML_by_R
 Practice to construct model of Mechanical Learning (ML) by R and the memo. I try to use below packages and to introduce ML to my reserach that is by Molecular Dynamics (MD) simulation. To keep accuracy of this README, I write on Japanese, **README (Japanese).md**, too just in case.   
 
 # Overview
