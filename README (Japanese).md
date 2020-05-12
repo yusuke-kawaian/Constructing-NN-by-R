@@ -2,7 +2,7 @@
 Rを用いた機械学習モデルの構築の練習とそのメモである. 後述のRのpackageを用いて自身のMDシミュレーションを用いた研究に機械学習を導入することを目指す. 正確性を担保するため一応日本語でも記す.  
 
 # Overview    
-私の研究は, MD計算を用いて系に電圧を印加した際のカチオンの多孔質カーボンへの選択的吸着の特性を調査するものである. 本試行はRを用いてカチオンの質量 `mass`, 価数 `valent`, 第一/第二水和半径 `r1/r2`, RDFの最大値 `gr_max` 並びに系に印加した電圧 `vol`, 系の細孔径 `pore_d` の7つの特徴量から細孔内へカチオンが吸着される確率 pred_P を予測するモデルを作成する.  
+私の研究は, MD計算を用いて系に電圧を印加した際のカチオンの多孔質カーボンへの選択的吸着の特性を調査するものである. 本試行はRを用いてカチオンの質量 `mass`, 価数 `valent`, 第一/第二水和半径 `r1/r2`, RDFの最大値 `gr_max` 並びに系に印加した電圧 `vol`, 系の細孔径 `pore_d` の7つの特徴量から細孔内へカチオンが吸着される確率 pred_P を予測するモデルを作成する. data数は**222個**.  
 
 # Description  
 ## Packages  
@@ -36,18 +36,6 @@ This package can construct 3 layers NN.
 act. func.: softmax or linear conbination(?)  
 err. func.: MSE or closs enthoropy(?)**  
 About this detail, please shows [here](https://www.rdocumentation.org/packages/nnet/versions/7.3-14/topics/nnet).  
-
-memo  
-good points  
-    - 簡単.  
-    - コンソールに tensorflow みたく学習過程が表示されるので見やすい.  
-    - neuralnet packageに比べて学習が早く感じた.  
-
-bad points  
-    - 最大3層NNまでしか組めない.  
-    - NNモデルのplot機能が無い.  
-    - 学習の収束地点はglobal minimumではない. (学習毎に結果が異なる.)  
-    - 活性化関数の指定法がちゃんと理解できていない. (多分恒等関数とsoftmaxが使える)　　 
     
 ### neuralnet package  
 This package can construct large scare NN model.  
@@ -71,7 +59,31 @@ act. func.: logistic sigmoid, tanh or linear conbination
 err. func.: MSE or closs enthoropy**    
 About this detail, please shows [here](https://www.rdocumentation.org/packages/neuralnet/versions/1.44.2/topics/neuralnet).  
 
-memo  
+### caret package  
+This package can deal with many ML. In this trial, I use it for data processing mainly.  
+About this detail, please shows [here](http://topepo.github.io/caret/index.html).
+
+
+# Results and Discussion
+## normalization  
+```
+norm <- function(x){
+  return((x-min(x)) / (max(x)-min(x)))
+}
+```
+今回のdatasetは一様分布であるため, 上記の正規化を行った.  
+
+## multiple regression model
+```
+#sinple multiple regression
+sol.m <- lm(s_data$Ptotal~.,data=s_data)
+#multiple regression considered exchange interaction
+sol.m <- lm(s_data$Ptotal~.^2,data=s_data)
+```
+この関数での`s_data`は前述の7つの特徴量を示す.
+このモデルは`step(sol.m)`関数を用いて**変数減少法**により最適化した.  
+
+## NN model by neuralnet package  
 good points  
     - 3層以上の複雑なNNを構築できる.    
     - act. func.やoptimizerなど様々な種類を指定できる.    
@@ -82,43 +94,17 @@ bad points
     - もっと高性能なReLU関数を使うことができない.  
     - DLモデルを構築することができるが, 個人所有のPCではdoParallerl packageを用いても4層以上のNNは処理しきれない.  
 
-### caret package  
-This package can deal with many ML. In this trial, I use it for data processing mainly.  
-About this detail, please shows [here](http://topepo.github.io/caret/index.html).
+## NN model by nnet package  
+good points  
+    - 簡単.  
+    - コンソールに tensorflow みたく学習過程が表示されるので見やすい.  
+    - neuralnet packageに比べて学習が早く感じた.  
 
-## Convinient Function
-I show some convinient function.  
-### the function for input on console
-```
-read_func <- function () {
-    Str <- readline(" <<< ")
-    as.numeric(unlist(Str))
-    } 
-```  
-Pythonでの`input('>>>	')`関数にあたるもの. Rでは意外と無かったので他の人の自作関数を使用. (ソースはそのうちに)
-
-### the function for binding string
-```
-"&" <- function(e1, e2) {
-      if (is.character(c(e1, e2))) {
-        paste(e1, e2, sep = "")
-      } else {
-        base::"&"(e1, e2)
-      }
-    }
-```
-Pythonでの`+`, Fortran90での`//`にあたるもの. 文字列を結合する関数. これもRには無かったので以下略.
-
-### the function for normalization
-```
-norm <- function(x){
-  return((x-min(x)) / (max(x)-min(x)))
-}
-```
-今回のdatasetは一様分布であるため, 上記の正規化を行った. 
-
-# Results and Discussion
-そのうち追記する予定.
+bad points  
+    - 最大3層NNまでしか組めない.  
+    - NNモデルのplot機能が無い.  
+    - 学習の収束地点はglobal minimumではない. (学習毎に結果が異なる.)  
+    - 活性化関数の指定法がちゃんと理解できていない. (多分恒等関数とsoftmaxが使える)  
 
 # Conclusion     
 色々調べながら取り組んだ結果, 一応モデルとしては完成した. そもそもdatasetがあまり多くないという問題を抱えているためこれからも様々なpackageを利用してみたい. Rはpackageごとの長所短所の差が激しいため, 汎用性の高いPythonのtensorflowでも似たようなモデルを構築したい.  
