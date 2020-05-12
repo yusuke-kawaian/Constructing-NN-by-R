@@ -1,4 +1,4 @@
-# Constructing-NN-by-R
+# Constructing_ML_by_R
 Rを用いた機械学習モデルの構築の練習とそのメモである. 後述のRのpackageを用いて自身のMDシミュレーションを用いた研究に機械学習を導入することを目指す. 正確性を担保するため一応日本語でも記す.  
 
 # Overview    
