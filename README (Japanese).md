@@ -33,9 +33,12 @@ registerDoParallel(cl)
 This package can construct 3 layers NN.  
 ```nn <- nnet(train_data, train_labels, size = 100, rang = 0.5, decay = 0, maxit = 1000)```   
 **Optimizer: BFGS method  
-act. func.: softmax or linear conbination(?)  
+act. func. (hidden): logistic sigmoid  
+act. func. (output): softmax or linear conbination  
 err. func.: MSE or closs enthoropy(?)**  
 About this detail, please shows [here](https://www.rdocumentation.org/packages/nnet/versions/7.3-14/topics/nnet).  
+
+hess=TRUEにしてヘッセ行列の固有値を出力しておくことで, モデルの簡易的な評価ができる. (w∗で評価されたヘッセ行列が正定値ならばw∗は極小点である. 確認法は`eigen(nn$Hess, T)$vectors)`. [here](https://www.yasuhisay.info/entry/20081222/1229923231#プログラム))  
     
 ### neuralnet package  
 This package can construct large scare NN model.  
@@ -104,7 +107,7 @@ bad points
     - 最大3層NNまでしか組めない.  
     - NNモデルのplot機能が無い.  
     - 学習の収束地点はglobal minimumではない. (学習毎に結果が異なる.)  
-    - 活性化関数の指定法がちゃんと理解できていない. (多分恒等関数とsoftmaxが使える)  
+    - ~~活性化関数の指定法がちゃんと理解できていない. (多分恒等関数とsoftmaxが使える)~~ →　中間層は多分logistic sigmoid関数. 出力層はlinear outputとsoftmax関数が選べる.
 
 # Conclusion     
 色々調べながら取り組んだ結果, 一応モデルとしては完成した. そもそもdatasetがあまり多くないという問題を抱えているためこれからも様々なpackageを利用してみたい. Rはpackageごとの長所短所の差が激しいため, 汎用性の高いPythonのtensorflowでも似たようなモデルを構築したい.  
@@ -113,9 +116,9 @@ bad points
 
 # Problems
 現状自分が抱える問題点, 疑問点を以下に記す.  
-    - datasetでカバーされていない範囲の数値をパラメータとして予測に用いていいのか. (pore_d = 11までしかdatasetはカバーされていないが, pore_d = 15の時の数値を予測することが可能か.)  
+    - ~~datasetでカバーされていない範囲の数値をパラメータとして予測に用いていいのか. (pore_d = 11までしかdatasetはカバーされていないが, pore_d = 15の時の数値を予測することが可能か.)~~　→　多分ダメ.    
     - 未知datasetの正規化はどの尺度で行えばいいのか.  
     - neuralnet packageに未知datasetを読み込ませて予測するにはどうすればいいのか.  
-    - RでReLU関数を用いるにはどのような関数を定義すればいいのか.
+    - ~~RでReLU関数を用いるにはどのような関数を定義すればいいのか.~~　→　sigmoid libraryの`relu(x)`関数で使用可能. ただしact. func. として組み込めるのは`neuralnet()`関数のみ.   
 
 
