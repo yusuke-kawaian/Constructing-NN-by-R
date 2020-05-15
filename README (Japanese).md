@@ -114,11 +114,26 @@ bad points
 
 この個人的なまとめを書いていて思ったが, caret packageがすごく使いやすそうなので今後勉強していきたい.
 
-# Problems
+# My Problems
 現状自分が抱える問題点, 疑問点を以下に記す.  
     - ~~datasetでカバーされていない範囲の数値をパラメータとして予測に用いていいのか. (pore_d = 11までしかdatasetはカバーされていないが, pore_d = 15の時の数値を予測することが可能か.)~~　→　多分ダメ.    
     - 未知datasetの正規化はどの尺度で行えばいいのか.  
-    - neuralnet packageに未知datasetを読み込ませて予測するにはどうすればいいのか.  
-    - ~~RでReLU関数を用いるにはどのような関数を定義すればいいのか.~~　→　sigmoid libraryの`relu(x)`関数で使用可能. ただしact. func. として組み込めるのは`neuralnet()`関数のみ.   
+    - neuralnet packageに未知datasetを読み込ませて予測するにはどうすればいいのか. →　未知datasetのp_totalにダミーの数値を置いて導入する. (クライアントPCのスペックが低いため未試行.)  
+    - ~~RでReLU関数を用いるにはどのような関数を定義すればいいのか.~~　→　sigmoid libraryの`relu(x)`関数で使用可能. ただしact. func. として組み込めるのは`neuralnet()`関数のみ.     
+      ```
+      ReLU <- function(x){
+          relu(x)
+        }
+      nn <- neuralnet(formula = formula.nn, 
+                data = train,
+                hidden = c(5,5),
+                act.fct = ReLU,
+                learningrate = 0.01, 
+                threshold = 0.01,
+                stepmax = 1e+06,
+                err.fct = "sse",
+                linear.output=TRUE)
+      ```  
+      
 
 
