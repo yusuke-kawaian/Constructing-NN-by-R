@@ -121,18 +121,18 @@ bad points
     - neuralnet packageに未知datasetを読み込ませて予測するにはどうすればいいのか. →　未知datasetのp_totalにダミーの数値を置いて導入する. (クライアントPCのスペックが低いため未試行.)  
     - ~~RでReLU関数を用いるにはどのような関数を定義すればいいのか.~~　→　sigmoid libraryの`relu(x)`関数で使用可能. ただしact. func. として組み込めるのは`neuralnet()`関数のみ.     
       ```
-      ReLU <- function(x){
-          relu(x)
-        }
-      nn <- neuralnet(formula = formula.nn, 
-                data = train,
-                hidden = c(5,5),
-                act.fct = ReLU,
-                learningrate = 0.01, 
-                threshold = 0.01,
-                stepmax = 1e+06,
-                err.fct = "sse",
-                linear.output=TRUE)
+      ReLU <- function(x){  
+          relu(x)  
+        }  
+      nn <- neuralnet(formula = formula.nn,   
+                data = train,  
+                hidden = c(5,5),  
+                act.fct = ReLU,  
+                learningrate = 0.01,   
+                threshold = 0.01,  
+                stepmax = 1e+06,  
+                err.fct = "sse",  
+                linear.output=TRUE)  
       ```  
       
 
