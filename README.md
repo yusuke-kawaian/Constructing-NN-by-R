@@ -122,7 +122,7 @@ nnet packageを用いて作成した100nodesの3層NNはtrain accuracy(RSME): 0.
 # My Problems
 現状自分が抱える問題点, 疑問点を以下に記す.  
     - ~~datasetでカバーされていない範囲の数値をパラメータとして予測に用いていいのか. (pore_d = 11までしかdatasetはカバーされていないが, pore_d = 15の時の数値を予測することが可能か.)~~　→　多分ダメ.    
-    - ~~未知datasetの正規化はどの尺度で行えばいいのか. ~~→　多分training datasetと同じ尺度で行う. 
+    - ~~未知datasetの正規化はどの尺度で行えばいいのか.~~  →　多分training datasetと同じ尺度で行う.   
     - neuralnet packageに未知datasetを読み込ませて予測するにはどうすればいいのか. →　未知datasetのp_totalにダミーの数値を置いて導入する. (クライアントPCのスペックが低いため未試行.)  
     - ~~RでReLU関数を用いるにはどのような関数を定義すればいいのか.~~　→　sigmoid libraryの`relu(x)`関数で使用可能. ただしact. func. として組み込めるのは`neuralnet()`関数のみ.     
 ```
