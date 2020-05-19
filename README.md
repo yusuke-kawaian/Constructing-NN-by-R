@@ -1,8 +1,8 @@
-# Introduction_of__ML_by_R
-Practice to construct model of Mechanical Learning (ML) by R and the memo. I try to use below packages and to introduce ML to my reserach that is by Molecular Dynamics (MD) simulation. To keep accuracy of this README, I write on Japanese, **README (Japanese).md**, too just in case.   
+# Constructing_ML_by_R
+Rを用いた機械学習モデルの構築の練習とそのメモである. 後述のRのpackageを用いて自身のMDシミュレーションを用いた研究に機械学習を導入することを目指す. 正確性を担保するため一応日本語でも記す.  
 
-# Overview
-My study investigates the characteristics that metal cations selectivity adsorb to micro porous carbon with applied voltage by MD simulation. In this trial, I construct the ML model that predicts the probability `pred_P` that metal cations adsorb to a pore with 7 parameters, `mass`, `valent`, the first/second hydration radius `r1/ r2`, the maximum value of RDF `gr_max`, voltage `vol` and pore diameter `pore_d`, by R. The number of dataset is **157**.       
+# Overview    
+私の研究は, MD計算を用いて系に電圧を印加した際のカチオンの多孔質カーボンへの選択的吸着の特性を調査するものである. 本試行はRを用いてカチオンの質量 `mass`, 価数 `valent`, 第一/第二水和半径 `r1/r2`, RDFの最大値 `gr_max` 並びに系に印加した電圧 `vol`, 系の細孔径 `pore_d` の7つの特徴量から細孔内へカチオンが吸着される確率 `pred_P` を予測するモデルを作成する. data数は**157個**.  
 
 # Description  
 ## Packages  
@@ -33,10 +33,12 @@ registerDoParallel(cl)
 This package can construct 3 layers NN.  
 ```nn <- nnet(train_data, train_labels, size = 100, rang = 0.5, decay = 0, maxit = 1000)```   
 **Optimizer: BFGS method  
-act. func.: softmax or linear conbination(?)  
+act. func. (hidden): logistic sigmoid  
+act. func. (output): softmax or linear conbination  
 err. func.: MSE or closs enthoropy(?)**  
 About this detail, please shows [here](https://www.rdocumentation.org/packages/nnet/versions/7.3-14/topics/nnet).  
-  
+
+hess=TRUEにしてヘッセ行列の固有値を出力しておくことで, モデルの簡易的な評価ができる. (w∗で評価されたヘッセ行列が正定値ならばw∗は極小点である. 確認法は`eigen(nn$Hess, T)$vectors)`. [here](https://www.yasuhisay.info/entry/20081222/1229923231#プログラム))  
     
 ### neuralnet package  
 This package can construct large scare NN model.  
@@ -64,68 +66,79 @@ About this detail, please shows [here](https://www.rdocumentation.org/packages/n
 This package can deal with many ML. In this trial, I use it for data processing mainly.  
 About this detail, please shows [here](http://topepo.github.io/caret/index.html).
 
- 
+
 # Results and Discussion
 ## normalization  
-In this trial, I normalize with below equation because the dataset is **uniform distribution**.  
 ```
 norm <- function(x){
-  return((x-min(x)) / (max(x)-min(x)))
+  return(abs(x-normalization[1,])/(normalization[2,]-normalization[1,]))
 }
-```   
 
-## multiple regression model  
-I tried to construct multiple regression model by below codes.   
+normed_data <- apply(dataset, 1, norm)
+normed_data <- do.call("rbind", normed_data)
+```
+今回のdatasetは一様分布であるため, 上記の正規化を行った. 正規化の尺度を未知datasetと統一するため, 特徴量の最大値と最小値を記したnormalization.txtを別途用意し, このファイル内の数値を用いて正規化を行った. 
+
+## multiple regression model
 ```
 #sinple multiple regression
 sol.m <- lm(s_data$Ptotal~.,data=s_data)
-#multiple regression considered exchange interaction 
+#multiple regression considered exchange interaction
 sol.m <- lm(s_data$Ptotal~.^2,data=s_data)
-```  
-Here, `s_data` expresses the above 7 parameters. 
-
-This model optimized by `step(sol.m)` function that carries out **variable reduction method**. 
+```
+この関数での`s_data`は前述の7つの特徴量を示す.
+このモデルは`step(sol.m)`関数を用いて**変数減少法**により最適化した.  
 
 ## NN model by neuralnet package  
-I construced NN model by above codes.  
-
 good points  
-    - it can build DL model.    
-    - it can choose some act. func. and optimizer.    
-    - it can plot NN model.  
+    - 3層以上の複雑なNNを構築できる.    
+    - act. func.やoptimizerなど様々な種類を指定できる.    
+    - NNのplotをすることができる.  
 
 bad points  
-    - **neuralnet function can't deal with unknown dataset because this function specifies both parameters and labels. So, I don't find how to introduce unknown dataset to themodel.**    
-    - it can't use ReLU function that is high performance act. function.   
-    - it can't process complex DL model with personal PC although it can construct DL model.   
+    - **neuralnet functionでは, 訓練データをdatasetとlabelに分けずに指定するので, label未知データを用いる場合どのように読み込めば良いか分からない.**  
+    - もっと高性能なReLU関数を使うことができない.  
+    - DLモデルを構築することができるが, 個人所有のPCではdoParallerl packageを用いても4層以上のNNは処理しきれない.  
 
 ## NN model by nnet package  
-I construced NN model by above codes.  
-
 good points  
-    - easy.  
-    - output leraning process on console.  
-    - speedy than the neuralnet package.  
+    - 簡単.  
+    - コンソールに tensorflow みたく学習過程が表示されるので見やすい.  
+    - neuralnet packageに比べて学習が早く感じた.  
 
 bad points  
-    - restrictive. it make less than 3 layers NN.  
-    - it can't plot.  
-    - The convergence by this optimizer is not global minimum.  
-    - I've not understood how to use activated function yet.   
-    
+    - 最大3層NNまでしか組めない.  
+    - NNモデルのplot機能が無い.  
+    - 学習の収束地点はglobal minimumではない. (学習毎に結果が異なる.)  
+    - ~~活性化関数の指定法がちゃんと理解できていない. (多分恒等関数とsoftmaxが使える)~~ →　中間層は多分logistic sigmoid関数. 出力層はlinear outputとsoftmax関数が選べる.
 
-# Conclusion  
-In conclusion, I could construct NN model. In the future, I try to intoduce more packages because my study give only little datasets. The package of R has many good points and bad points. So, I want to introdce too tensorflow of python that is genelic.   
+# Conclusion     
+色々調べながら取り組んだ結果, 一応モデルとしては完成した. そもそもdatasetがあまり多くないという問題を抱えているためこれからも様々なpackageを利用してみたい. Rはpackageごとの長所短所の差が激しいため, 汎用性の高いPythonのtensorflowでも似たようなモデルを構築したい.  
 
-Especially, I want to more study about caret package because I feel it is very convinient.  
+nnet packageを用いて作成した100nodesの3層NNはtrain accuracy(RSME): 0.02, test accuracy(RMSE): 0.10 を示した.  
 
+この個人的なまとめを書いていて思ったが, caret packageがすごく使いやすそうなので今後勉強していきたい.
 
 # My Problems
-I show my problems below.   
-    - Is it possible to use the values that are over the range of training dataset as parameters for prediction?  
-    - How to normalize unknown dataset?  
-    - How to use neuralnet package for prediction with unknown dataset?    
-    - How to define reLU function on R?
-
+現状自分が抱える問題点, 疑問点を以下に記す.  
+    - ~~datasetでカバーされていない範囲の数値をパラメータとして予測に用いていいのか. (pore_d = 11までしかdatasetはカバーされていないが, pore_d = 15の時の数値を予測することが可能か.)~~　→　多分ダメ.    
+    - ~~未知datasetの正規化はどの尺度で行えばいいのか. ~~→　多分training datasetと同じ尺度で行う. 
+    - neuralnet packageに未知datasetを読み込ませて予測するにはどうすればいいのか. →　未知datasetのp_totalにダミーの数値を置いて導入する. (クライアントPCのスペックが低いため未試行.)  
+    - ~~RでReLU関数を用いるにはどのような関数を定義すればいいのか.~~　→　sigmoid libraryの`relu(x)`関数で使用可能. ただしact. func. として組み込めるのは`neuralnet()`関数のみ.     
+```
+ReLU <- function(x){  
+            relu(x)  
+         }   
+nn <- neuralnet(formula = formula.nn,   
+                data = train,  
+                hidden = c(5,5),  
+                act.fct = ReLU,  
+                learningrate = 0.01,   
+                threshold = 0.01,  
+                stepmax = 1e+06,  
+                err.fct = "sse",  
+                linear.output=TRUE)  
+```  
+      
 
 
